@@ -73,11 +73,11 @@ export default function AdminLoginPage() {
           
           {/* Logo Header */}
           <div className="flex flex-col items-center text-center mb-7">
-            <div className="bg-white/95 px-5 py-2.5 rounded-2xl shadow-lg border border-white/20 mb-4 inline-flex items-center justify-center">
+            <div className="bg-white/95 px-5 py-2.5 rounded-2xl shadow-lg mb-4 inline-flex items-center justify-center">
               <img 
-                src="/logo.png" 
+                src="/images/logo.png" 
                 alt="Excedentes de RAEES Suárez S.A.S." 
-                className="h-12 w-auto object-contain"
+                className="h-14 w-auto object-contain"
               />
             </div>
             

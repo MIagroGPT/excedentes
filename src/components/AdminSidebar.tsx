@@ -38,11 +38,11 @@ export default function AdminSidebar() {
         
         {/* Brand Header con Logo Oficial */}
         <div className="px-2 py-3 border-b border-slate-800 space-y-2">
-          <div className="bg-white/95 px-3 py-1.5 rounded-xl shadow-md border border-white/20 flex items-center justify-center">
+          <div className="bg-white/95 px-3 py-2 rounded-2xl shadow-md flex items-center justify-center">
             <img 
-              src="/logo.png" 
+              src="/images/logo.png" 
               alt="Excedentes de RAEES Suárez S.A.S." 
-              className="h-10 w-auto object-contain"
+              className="h-12 w-auto object-contain"
             />
           </div>
           <p className="text-[10px] text-center text-brand-400 font-semibold uppercase tracking-wider">

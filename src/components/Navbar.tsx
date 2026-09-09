@@ -24,15 +24,13 @@ export default function Navbar() {
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         
-        {/* Logo Oficial */}
-        <Link href="/" className="flex items-center gap-2 group">
-          <div className="bg-white px-3 py-1.5 rounded-xl shadow-sm border border-slate-200 flex items-center justify-center transition-all group-hover:scale-105">
-            <img 
-              src="/logo.png" 
-              alt="Excedentes de RAEES Suárez S.A.S." 
-              className="h-11 sm:h-12 w-auto object-contain"
-            />
-          </div>
+        {/* Logo Oficial sin recuadro y de mayor tamaño */}
+        <Link href="/" className="flex items-center group py-0.5">
+          <img 
+            src="/images/logo.png" 
+            alt="Excedentes de RAEES Suárez S.A.S." 
+            className="h-12 sm:h-14 md:h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105 drop-shadow-sm"
+          />
         </Link>
 
         {/* Desktop Navigation */}

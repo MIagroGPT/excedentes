@@ -20,12 +20,12 @@ export default function Footer() {
           
           {/* Col 1: Brand Info */}
           <div className="lg:col-span-2 space-y-4">
-            <Link href="/" className="inline-block">
-              <div className="bg-white/95 hover:bg-white px-4 py-2 rounded-xl shadow-lg border border-white/20 inline-flex items-center justify-center transition-all">
+            <Link href="/" className="inline-block group">
+              <div className="bg-white/95 hover:bg-white px-3 py-1.5 rounded-2xl shadow-md inline-flex items-center justify-center transition-all group-hover:scale-105">
                 <img 
-                  src="/logo.png" 
+                  src="/images/logo.png" 
                   alt="Excedentes de RAEES Suárez S.A.S." 
-                  className="h-12 w-auto object-contain"
+                  className="h-14 w-auto object-contain"
                 />
               </div>
             </Link>
