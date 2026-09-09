@@ -25,7 +25,7 @@ export default function Footer() {
                 <img 
                   src="/logo.png" 
                   alt="Excedentes de RAEES Suárez S.A.S." 
-                  className="h-10 w-auto object-contain"
+                  className="h-12 w-auto object-contain"
                 />
               </div>
             </Link>

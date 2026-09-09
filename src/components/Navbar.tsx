@@ -30,7 +30,7 @@ export default function Navbar() {
             <img 
               src="/logo.png" 
               alt="Excedentes de RAEES Suárez S.A.S." 
-              className="h-9 sm:h-10 w-auto object-contain"
+              className="h-11 sm:h-12 w-auto object-contain"
             />
           </div>
         </Link>

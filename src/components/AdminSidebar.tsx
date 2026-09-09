@@ -42,7 +42,7 @@ export default function AdminSidebar() {
             <img 
               src="/logo.png" 
               alt="Excedentes de RAEES Suárez S.A.S." 
-              className="h-8 w-auto object-contain"
+              className="h-10 w-auto object-contain"
             />
           </div>
           <p className="text-[10px] text-center text-brand-400 font-semibold uppercase tracking-wider">
