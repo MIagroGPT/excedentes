@@ -1,0 +1,62 @@
+[
+  {
+    "id": "SOL-2026-003",
+    "empresa": "ELOCTRONICOS DE LA MINORISTA",
+    "nit": "452542452542",
+    "contacto": "AANDRES RAAMIREZ EL SOCIO",
+    "email": "info@cubiertasplasticas.com",
+    "telefono": "+523314790654",
+    "direccion": "CALLE COLOMBIA 54  78U8 87 ",
+    "ciudad": "Medellín",
+    "tipoResiduos": [
+      "Monitores & Pantallas",
+      "Baterías & UPS",
+      "Impresoras & Periféricos",
+      "Electrodomésticos & Varios"
+    ],
+    "pesoAproximado": "100 - 300 Kg",
+    "mensaje": "RECOGER EN LA PLAZA , PREGUNTE POR DON TOÑO EL DE BODEGA EN LA PUERTA GRIS",
+    "fechaCreacion": "5/9/2026, 12:20:18 p. m.",
+    "estado": "procesado",
+    "loteIdAsociado": "RAEE-2026-004"
+  },
+  {
+    "id": "SOL-2026-002",
+    "empresa": "DEMO DEMO",
+    "nit": "855757",
+    "contacto": "andres ramirez",
+    "email": "yoalejo72@gmail.com",
+    "telefono": "+573003374208",
+    "direccion": "CALLE 45 NUMERO 56",
+    "ciudad": "Medellín",
+    "tipoResiduos": [
+      "Monitores & Pantallas",
+      "Baterías & UPS",
+      "Impresoras & Periféricos"
+    ],
+    "pesoAproximado": "Menos de 100 Kg",
+    "mensaje": "ENTRAR PO LA PUERTA NEGRA, ANUNCIARCE CON DON TOÑO",
+    "fechaCreacion": "5/9/2026, 12:01:37 p. m.",
+    "estado": "procesado",
+    "loteIdAsociado": "RAEE-2026-005"
+  },
+  {
+    "id": "SOL-2026-089",
+    "empresa": "Constructora del Valle",
+    "nit": "901.223.445-8",
+    "contacto": "Mariana Henao",
+    "email": "ambiental@constructoradelvalle.com",
+    "telefono": "+57 312 908 1122",
+    "direccion": "Autopista Sur # 65-10",
+    "ciudad": "Itagüí / Medellín",
+    "tipoResiduos": [
+      "Equipos de Cómputo",
+      "Baterías",
+      "Electrodomésticos"
+    ],
+    "pesoAproximado": "300 a 500 Kg",
+    "mensaje": "Requerimos recolección urgente para renovación tecnológica de oficina central y certificación ambiental.",
+    "fechaCreacion": "2026-03-04 14:20",
+    "estado": "anulado"
+  }
+]

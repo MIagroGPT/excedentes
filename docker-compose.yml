@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: excedentes_raees_web
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - N8N_WEBHOOK_URL=http://n8n:5678/webhook/raee-events
+    volumes:
+      - raee_data:/app/data
+
+volumes:
+  raee_data:
+    driver: local

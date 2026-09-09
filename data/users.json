@@ -1,0 +1,22 @@
+[
+  {
+    "id": "USR-001",
+    "nombre": "Administrador General",
+    "email": "admin@excedentesraees.com",
+    "password": "Admin2026*Secret",
+    "rol": "SUPER ADMIN",
+    "estado": "Activo",
+    "fechaCreacion": "2026-01-15 08:00",
+    "ultimoAcceso": "2026-03-09 08:10"
+  },
+  {
+    "id": "USR-002",
+    "nombre": "Supervisor de Operaciones",
+    "email": "supervisor@excedentesraees.com",
+    "password": "Supervisor2026*",
+    "rol": "SUPERVISOR",
+    "estado": "Activo",
+    "fechaCreacion": "2026-02-01 09:30",
+    "ultimoAcceso": "2026-03-08 17:45"
+  }
+]

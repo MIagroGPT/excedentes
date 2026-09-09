@@ -1,0 +1,294 @@
+[
+  {
+    "id": "RAEE-2026-005",
+    "codigoSeguimiento": "RAEE-MED-67220",
+    "cliente": {
+      "razonSocial": "DEMO DEMO",
+      "nit": "855757",
+      "contactoNombre": "andres ramirez",
+      "email": "yoalejo72@gmail.com",
+      "telefono": "+573003374208",
+      "direccion": "CALLE 45 NUMERO 56",
+      "ciudad": "Medellín"
+    },
+    "fechaSolicitud": "2026-09-05",
+    "etapaActual": 1,
+    "estado": "En Proceso",
+    "detallesCarga": {
+      "categoria": "Monitores & Pantallas",
+      "pesoEstimadoKg": 250,
+      "desglosePesaje": {
+        "plasticosKg": 0,
+        "metalesFerrososKg": 0,
+        "tarjetasElectronicasKg": 0,
+        "cablesKg": 0,
+        "bateriasKg": 0,
+        "residuosPeligrososKg": 0
+      },
+      "observaciones": "Convertido desde solicitud web SOL-2026-002. Residuos: Monitores & Pantallas, Baterías & UPS, Impresoras & Periféricos. Mensaje cliente: ENTRAR PO LA PUERTA NEGRA, ANUNCIARCE CON DON TOÑO"
+    },
+    "bitacora": [
+      {
+        "etapa": 1,
+        "fecha": "5/9/2026, 1:13:01 p. m.",
+        "nota": "Lote creado y registrado en plataforma.",
+        "usuario": "Administrador SaaS"
+      }
+    ]
+  },
+  {
+    "id": "RAEE-2026-004",
+    "codigoSeguimiento": "RAEE-MED-64698",
+    "cliente": {
+      "razonSocial": "ELOCTRONICOS DE LA MINORISTA",
+      "nit": "452542452542",
+      "contactoNombre": "AANDRES RAAMIREZ EL SOCIO",
+      "email": "info@cubiertasplasticas.com",
+      "telefono": "+523314790654",
+      "direccion": "CALLE COLOMBIA 54  78U8 87 ",
+      "ciudad": "Medellín"
+    },
+    "fechaSolicitud": "2026-09-05",
+    "etapaActual": 1,
+    "estado": "En Proceso",
+    "detallesCarga": {
+      "categoria": "Monitores & Pantallas",
+      "pesoEstimadoKg": 250,
+      "desglosePesaje": {
+        "plasticosKg": 0,
+        "metalesFerrososKg": 0,
+        "tarjetasElectronicasKg": 0,
+        "cablesKg": 0,
+        "bateriasKg": 0,
+        "residuosPeligrososKg": 0
+      },
+      "observaciones": "Convertido desde solicitud web SOL-2026-003. Residuos: Monitores & Pantallas, Baterías & UPS, Impresoras & Periféricos, Electrodomésticos & Varios. Mensaje cliente: RECOGER EN LA PLAZA , PREGUNTE POR DON TOÑO EL DE BODEGA EN LA PUERTA GRIS"
+    },
+    "bitacora": [
+      {
+        "etapa": 1,
+        "fecha": "5/9/2026, 1:12:07 p. m.",
+        "nota": "Lote creado y registrado en plataforma.",
+        "usuario": "Administrador SaaS"
+      }
+    ]
+  },
+  {
+    "id": "RAEE-2026-003",
+    "codigoSeguimiento": "RAEE-MED-72721",
+    "cliente": {
+      "razonSocial": "ELOCTRONICOS DE LA MINORISTA",
+      "nit": "452542452542",
+      "contactoNombre": "AANDRES RAAMIREZ EL SOCIO",
+      "email": "info@cubiertasplasticas.com",
+      "telefono": "+523314790654",
+      "direccion": "CALLE COLOMBIA 54  78U8 87 ",
+      "ciudad": "Medellín"
+    },
+    "fechaSolicitud": "2026-09-05",
+    "etapaActual": 8,
+    "estado": "Completado",
+    "detallesCarga": {
+      "categoria": "Monitores & Pantallas",
+      "pesoEstimadoKg": 250,
+      "desglosePesaje": {
+        "plasticosKg": 10,
+        "metalesFerrososKg": 45,
+        "tarjetasElectronicasKg": 12,
+        "cablesKg": 23,
+        "bateriasKg": 23,
+        "residuosPeligrososKg": 8
+      },
+      "observaciones": "Convertido desde solicitud web SOL-2026-003. Mensaje: RECOGER EN LA PLAZA , PREGUNTE POR DON TOÑO EL DE BODEGA EN LA PUERTA GRIS",
+      "pesoRealKg": 121
+    },
+    "bitacora": [
+      {
+        "etapa": 1,
+        "fecha": "5/9/2026, 12:34:01 p. m.",
+        "nota": "Lote creado y registrado en plataforma.",
+        "usuario": "Administrador SaaS"
+      },
+      {
+        "etapa": 2,
+        "fecha": "5/9/2026, 12:34:32 p. m.",
+        "nota": "Avanzó a 02 Solicitud de Recolección",
+        "usuario": "Operador RAEE"
+      },
+      {
+        "etapa": 3,
+        "fecha": "5/9/2026, 12:35:34 p. m.",
+        "nota": "Avanzó a 03 Recolección y Logística",
+        "usuario": "Operador RAEE"
+      },
+      {
+        "etapa": 9,
+        "fecha": "5/9/2026, 12:35:49 p. m.",
+        "nota": "Avanzó a 09 Reciclaje y Aprovechamiento",
+        "usuario": "Operador RAEE"
+      },
+      {
+        "etapa": 8,
+        "fecha": "5/9/2026, 12:36:10 p. m.",
+        "nota": "Certificado ambiental oficial emitido.",
+        "usuario": "Operador RAEE"
+      }
+    ],
+    "certificado": {
+      "numeroCertificado": "CERT-RAEE-2026-0040",
+      "fechaEmision": "2026-09-05",
+      "hashSeguridad": "y76q8v36dqav0rybrls85f",
+      "qrUrl": "/verificar-certificado?codigo=RAEE-MED-72721",
+      "disposicionFinal": "Aprovechamiento y recuperación de metales y plásticos técnicos bajo norma MinAmbiente",
+      "impactoCO2EvitadoKg": 254
+    },
+    "fechaFinalizacion": "2026-09-05"
+  },
+  {
+    "id": "RAEE-2026-001",
+    "codigoSeguimiento": "RAEE-MED-84920",
+    "cliente": {
+      "razonSocial": "Tecnologías Andinas S.A.S.",
+      "nit": "900.845.120-4",
+      "contactoNombre": "Ing. Laura Cadavid",
+      "email": "logistica@tecnoandinas.com",
+      "telefono": "+57 311 489 2039",
+      "direccion": "Calle 10 # 43E - 22",
+      "ciudad": "Medellín"
+    },
+    "fechaSolicitud": "2026-02-15",
+    "fechaRecoleccion": "2026-02-18",
+    "fechaFinalizacion": "2026-02-22",
+    "etapaActual": 10,
+    "estado": "Completado",
+    "detallesCarga": {
+      "categoria": "Equipos de Cómputo",
+      "pesoEstimadoKg": 450,
+      "pesoRealKg": 468.5,
+      "desglosePesaje": {
+        "plasticosKg": 110.2,
+        "metalesFerrososKg": 185.3,
+        "tarjetasElectronicasKg": 88,
+        "cablesKg": 42.5,
+        "bateriasKg": 28.5,
+        "residuosPeligrososKg": 14
+      },
+      "observaciones": "Torres de cómputo descontinuadas, monitores LCD y switchs de red retirados de sede principal."
+    },
+    "bitacora": [
+      {
+        "etapa": 1,
+        "fecha": "2026-02-15 09:30",
+        "nota": "Contacto recibido por formulario web",
+        "usuario": "Sistema Web"
+      },
+      {
+        "etapa": 2,
+        "fecha": "2026-02-15 11:00",
+        "nota": "Solicitud de recolección aprobada y programada",
+        "usuario": "Valentina Restrepo"
+      },
+      {
+        "etapa": 3,
+        "fecha": "2026-02-18 14:15",
+        "nota": "Recolección completada en camión institucional",
+        "usuario": "Conductor / Logística"
+      },
+      {
+        "etapa": 4,
+        "fecha": "2026-02-19 08:30",
+        "nota": "Pesaje inicial e ingreso a planta de clasificación",
+        "usuario": "Mateo Gómez"
+      },
+      {
+        "etapa": 6,
+        "fecha": "2026-02-20 16:00",
+        "nota": "Desensamble técnico y extracción selectiva de componentes",
+        "usuario": "Técnico Desarme"
+      },
+      {
+        "etapa": 7,
+        "fecha": "2026-02-21 10:00",
+        "nota": "Informe de desarme técnico consolidado",
+        "usuario": "Carlos Suárez"
+      },
+      {
+        "etapa": 8,
+        "fecha": "2026-02-22 15:30",
+        "nota": "Certificado oficial emitido con firma digital y QR",
+        "usuario": "Valentina Restrepo"
+      },
+      {
+        "etapa": 9,
+        "fecha": "5/9/2026, 10:55:15 a. m.",
+        "nota": "Avanzó a 09 Reciclaje y Aprovechamiento",
+        "usuario": "Operador RAEE"
+      },
+      {
+        "etapa": 10,
+        "fecha": "5/9/2026, 12:28:53 p. m.",
+        "nota": "HGHHG",
+        "usuario": "Operador RAEE"
+      }
+    ],
+    "certificado": {
+      "numeroCertificado": "CERT-RAEE-2026-0042",
+      "fechaEmision": "2026-02-22",
+      "hashSeguridad": "e8b7c3d9a1f4e5a2b8c9d0e1f2a3b4c5",
+      "qrUrl": "/verificar-certificado?codigo=RAEE-MED-84920",
+      "disposicionFinal": "Aprovechamiento de metales 82%, Valorización plástica 15%, Confinamiento controlado 3%",
+      "impactoCO2EvitadoKg": 980.5
+    }
+  },
+  {
+    "id": "RAEE-2026-002",
+    "codigoSeguimiento": "RAEE-ENV-93012",
+    "cliente": {
+      "razonSocial": "Banca Soluciones Medellín",
+      "nit": "890.301.992-1",
+      "contactoNombre": "Dr. Andrés Morales",
+      "email": "infraestructura@bancasoluciones.co",
+      "telefono": "+57 300 655 4411",
+      "direccion": "Avenida El Poblado # 15 Sur - 80",
+      "ciudad": "Medellín"
+    },
+    "fechaSolicitud": "2026-02-28",
+    "fechaRecoleccion": "2026-03-02",
+    "etapaActual": 6,
+    "estado": "En Proceso",
+    "detallesCarga": {
+      "categoria": "Telecomunicaciones",
+      "pesoEstimadoKg": 280,
+      "pesoRealKg": 295,
+      "desglosePesaje": {
+        "plasticosKg": 58,
+        "metalesFerrososKg": 120,
+        "tarjetasElectronicasKg": 75,
+        "cablesKg": 30,
+        "bateriasKg": 12,
+        "residuosPeligrososKg": 0
+      },
+      "observaciones": "Racks de servidores, UPS y cableado estructurado blindado."
+    },
+    "bitacora": [
+      {
+        "etapa": 1,
+        "fecha": "2026-02-28 10:15",
+        "nota": "Solicitud directa de corporación bancaria",
+        "usuario": "Sistema Web"
+      },
+      {
+        "etapa": 3,
+        "fecha": "2026-03-02 08:30",
+        "nota": "Recolección bajo protocolo estricto de seguridad",
+        "usuario": "Logística Especial"
+      },
+      {
+        "etapa": 6,
+        "fecha": "2026-03-03 11:20",
+        "nota": "Desmontaje de servidores y destrucción de discos con acta",
+        "usuario": "Mateo Gómez"
+      }
+    ]
+  }
+]
