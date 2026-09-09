@@ -6,7 +6,10 @@ import { LoteResiduo } from './types';
 async function loadLogoBase64(): Promise<string> {
   if (typeof window !== 'undefined') {
     try {
-      const response = await fetch('/logo.png');
+      let response = await fetch('/images/logo 2.png');
+      if (!response.ok) {
+        response = await fetch('/logo 2.png');
+      }
       const blob = await response.blob();
       return new Promise((resolve) => {
         const reader = new FileReader();

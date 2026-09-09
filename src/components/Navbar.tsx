@@ -27,7 +27,7 @@ export default function Navbar() {
         {/* Logo Oficial sin recuadro y de mayor tamaño */}
         <Link href="/" className="flex items-center group py-0.5">
           <img 
-            src="/images/logo.png" 
+            src="/images/logo 2.png" 
             alt="Excedentes de RAEES Suárez S.A.S." 
             className="h-12 sm:h-14 md:h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105 drop-shadow-sm"
           />

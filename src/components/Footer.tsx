@@ -23,7 +23,7 @@ export default function Footer() {
             <Link href="/" className="inline-block group">
               <div className="bg-white/95 hover:bg-white px-3 py-1.5 rounded-2xl shadow-md inline-flex items-center justify-center transition-all group-hover:scale-105">
                 <img 
-                  src="/images/logo.png" 
+                  src="/images/logo 2.png" 
                   alt="Excedentes de RAEES Suárez S.A.S." 
                   className="h-14 w-auto object-contain"
                 />
