@@ -1,13 +1,47 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Recycle, ShieldCheck, Phone, Mail, MapPin, ArrowUp, Heart } from 'lucide-react';
+import { Recycle, ShieldCheck, Phone, Mail, MapPin, ArrowUp, Heart, MessageCircle } from 'lucide-react';
+import { CMSContent } from '@/lib/types';
 
-export default function Footer() {
+interface FooterProps {
+  contacto?: CMSContent['contacto'];
+}
+
+const DEFAULT_CONTACTO: CMSContent['contacto'] = {
+  telefono: '+57 314 518 1158',
+  whatsapp: '+573145181158',
+  email: 'excedentessuarez5413@hotmail.com',
+  direccion: 'Calle 57 n 54-131 Paz con Cúcuta',
+  ciudad: 'Medellín, Colombia',
+  horario: 'Lunes a Viernes: 8:00 AM - 5:30 PM | Sábados: 8:00 AM - 1:00 PM'
+};
+
+export default function Footer({ contacto }: FooterProps = {}) {
+  const [contactData, setContactData] = useState<CMSContent['contacto']>(contacto || DEFAULT_CONTACTO);
+
+  useEffect(() => {
+    if (contacto) {
+      setContactData(contacto);
+    } else {
+      fetch('/api/cms')
+        .then(res => res.json())
+        .then(data => {
+          if (data?.contacto) {
+            setContactData(data.contacto);
+          }
+        })
+        .catch(err => console.error('Error cargando contacto en Footer:', err));
+    }
+  }, [contacto]);
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  const cleanPhone = (contactData.telefono || '').replace(/[^0-9+]/g, '');
+  const cleanWhatsapp = (contactData.whatsapp || '').replace(/[^0-9]/g, '');
 
   return (
     <footer className="bg-dark-bg border-t border-slate-800/80 text-slate-400 text-xs relative overflow-hidden">
@@ -73,20 +107,43 @@ export default function Footer() {
 
           {/* Col 4: Contact quick info */}
           <div className="space-y-3">
-            <h4 className="text-xs font-extrabold uppercase tracking-wider text-white">Medellín, Colombia</h4>
-            <div className="space-y-2 text-xs">
-              <p className="flex items-center gap-2 text-slate-300">
-                <MapPin className="w-3.5 h-3.5 text-brand-400 shrink-0" />
-                <span>Carrera 48 # 20-114, El Poblado</span>
+            <h4 className="text-xs font-extrabold uppercase tracking-wider text-white">
+              {contactData.ciudad || 'Medellín, Colombia'}
+            </h4>
+            <div className="space-y-2.5 text-xs">
+              <p className="flex items-start gap-2 text-slate-300">
+                <MapPin className="w-3.5 h-3.5 text-brand-400 shrink-0 mt-0.5" />
+                <span>{contactData.direccion || 'Calle 57 n 54-131 Paz con Cúcuta'}</span>
               </p>
-              <p className="flex items-center gap-2 text-slate-300">
-                <Phone className="w-3.5 h-3.5 text-brand-400 shrink-0" />
-                <span>+57 314 518 1158</span>
-              </p>
-              <p className="flex items-center gap-2 text-slate-300">
-                <Mail className="w-3.5 h-3.5 text-brand-400 shrink-0" />
-                <span>contacto@excedentesraees.com</span>
-              </p>
+              {contactData.telefono && (
+                <a 
+                  href={`tel:${cleanPhone}`} 
+                  className="flex items-center gap-2 text-slate-300 hover:text-brand-400 transition-colors"
+                >
+                  <Phone className="w-3.5 h-3.5 text-brand-400 shrink-0" />
+                  <span>{contactData.telefono}</span>
+                </a>
+              )}
+              {cleanWhatsapp && (
+                <a 
+                  href={`https://wa.me/${cleanWhatsapp}`} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-slate-300 hover:text-emerald-400 transition-colors"
+                >
+                  <MessageCircle className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                  <span>WhatsApp: {contactData.whatsapp}</span>
+                </a>
+              )}
+              {contactData.email && (
+                <a 
+                  href={`mailto:${contactData.email}`} 
+                  className="flex items-center gap-2 text-slate-300 hover:text-brand-400 transition-colors"
+                >
+                  <Mail className="w-3.5 h-3.5 text-brand-400 shrink-0" />
+                  <span className="break-all">{contactData.email}</span>
+                </a>
+              )}
             </div>
           </div>
 

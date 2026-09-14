@@ -200,7 +200,7 @@ export default function ServiciosPage() {
         </div>
       </section>
 
-      <Footer />
+      <Footer contacto={content.contacto} />
       <FloatingWhatsApp phone={content.contacto.whatsapp} />
     </main>
   );

@@ -1,14 +1,31 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { MessageCircle } from 'lucide-react';
 
 interface FloatingWhatsAppProps {
-  phone: string;
+  phone?: string;
 }
 
-export default function FloatingWhatsApp({ phone }: FloatingWhatsAppProps) {
-  const cleanPhone = phone.replace(/[^0-9]/g, '');
+export default function FloatingWhatsApp({ phone }: FloatingWhatsAppProps = {}) {
+  const [phoneNumber, setPhoneNumber] = useState(phone || '+573145181158');
+
+  useEffect(() => {
+    if (phone) {
+      setPhoneNumber(phone);
+    } else {
+      fetch('/api/cms')
+        .then(res => res.json())
+        .then(data => {
+          if (data?.contacto?.whatsapp) {
+            setPhoneNumber(data.contacto.whatsapp);
+          }
+        })
+        .catch(err => console.error('Error cargando WhatsApp en FloatingWhatsApp:', err));
+    }
+  }, [phone]);
+
+  const cleanPhone = (phoneNumber || '').replace(/[^0-9]/g, '');
 
   return (
     <aside aria-label="Contacto Rápido" className="fixed bottom-6 right-6 z-40 flex items-center gap-3">

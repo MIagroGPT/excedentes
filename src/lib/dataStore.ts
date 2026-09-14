@@ -252,8 +252,8 @@ export const INITIAL_CMS_CONTENT: CMSContent = {
   contacto: {
     telefono: "+57 314 518 1158",
     whatsapp: "+573145181158",
-    email: "contacto@excedentesraees.com",
-    direccion: "Carrera 48 # 20 - 114, Sector Industrial El Poblado / Guayabal",
+    email: "excedentessuarez5413@hotmail.com",
+    direccion: "Calle 57 n 54-131 Paz con Cúcuta",
     ciudad: "Medellín, Colombia",
     horario: "Lunes a Viernes: 8:00 AM - 5:30 PM | Sábados: 8:00 AM - 1:00 PM"
   }

@@ -24,7 +24,7 @@ export default function HomePage() {
       <TestimoniosCasos />
       <BlogSeccion articulos={content.blog} />
       <ContactoSeccion contacto={content.contacto} />
-      <Footer />
+      <Footer contacto={content.contacto} />
       <FloatingWhatsApp phone={content.contacto.whatsapp} />
     </main>
   );

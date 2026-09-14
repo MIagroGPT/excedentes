@@ -4,6 +4,7 @@ import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import FloatingWhatsApp from '@/components/FloatingWhatsApp';
 import { 
   ShieldCheck, 
   Search, 
@@ -302,6 +303,7 @@ function VerificarCertificadoContent() {
       </main>
 
       <Footer />
+      <FloatingWhatsApp />
     </div>
   );
 }

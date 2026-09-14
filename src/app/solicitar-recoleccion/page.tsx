@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import FloatingWhatsApp from '@/components/FloatingWhatsApp';
 import { 
   Truck, 
   CheckCircle2, 
@@ -347,6 +348,7 @@ export default function SolicitarRecoleccionPage() {
       </main>
 
       <Footer />
+      <FloatingWhatsApp />
     </div>
   );
 }
