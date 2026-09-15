@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import AdminSidebar from '@/components/AdminSidebar';
+import ImageUploader from '@/components/ImageUploader';
 import { 
   FileEdit, 
   Save, 
@@ -15,7 +16,8 @@ import {
   Eye,
   Calendar,
   Clock,
-  Tag
+  Tag,
+  LayoutGrid
 } from 'lucide-react';
 import { CMSContent } from '@/lib/types';
 
@@ -41,13 +43,13 @@ export default function AdminCMSPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
-  const [activeTab, setActiveTab] = useState<'hero' | 'nosotros' | 'servicios' | 'blog' | 'metricas' | 'contacto'>('hero');
+  const [activeTab, setActiveTab] = useState<'hero' | 'blog' | 'galeria' | 'nosotros' | 'servicios' | 'metricas' | 'contacto'>('hero');
 
   useEffect(() => {
     fetch('/api/cms')
       .then(r => r.json())
       .then(data => {
-        // Ensure default portadas and blog exist
+        // Ensure default portadas, blog and galeria exist
         const updated = {
           ...data,
           hero: {
@@ -55,7 +57,13 @@ export default function AdminCMSPage() {
             portada1: data.hero?.portada1 || '/images/portada-1.png',
             portada2: data.hero?.portada2 || '/images/portada-2.png'
           },
-          blog: Array.isArray(data.blog) ? data.blog : []
+          blog: Array.isArray(data.blog) ? data.blog : [],
+          galeria: Array.isArray(data.galeria) && data.galeria.length > 0 ? data.galeria : [
+            { id: 'gal-1', src: '/images/Promocional HISTORIA 1.jpg.jpeg', title: 'Transformación Tecnológica Sostenible' },
+            { id: 'gal-2', src: '/images/Promocional HISTORIA 2.jpg.jpeg', title: 'Certificación Ambiental Corporativa' },
+            { id: 'gal-3', src: '/images/Promocional HISTORIA 3.jpg.jpeg', title: 'Cero Vertedero y Economía Circular' },
+            { id: 'gal-4', src: '/images/Testimonio.jpg.jpeg', title: 'Experiencia y Confianza Empresarial' }
+          ]
         };
         setContent(updated);
         setLoading(false);
@@ -185,6 +193,15 @@ export default function AdminCMSPage() {
             <span>Blog & Artículos ({content.blog?.length || 0})</span>
           </button>
           <button
+            onClick={() => setActiveTab('galeria')}
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
+              activeTab === 'galeria' ? 'bg-slate-900 text-white shadow-sm' : 'bg-white text-slate-600 hover:text-slate-900 border border-slate-200'
+            }`}
+          >
+            <LayoutGrid className="w-3.5 h-3.5 text-teal-400" />
+            <span>Galería de Procesos ({content.galeria?.length || 4})</span>
+          </button>
+          <button
             onClick={() => setActiveTab('nosotros')}
             className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
               activeTab === 'nosotros' ? 'bg-slate-900 text-white shadow-sm' : 'bg-white text-slate-600 hover:text-slate-900 border border-slate-200'
@@ -235,117 +252,45 @@ export default function AdminCMSPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 
                 {/* Portada 1 */}
-                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+                <div className="p-5 rounded-3xl bg-slate-50 border border-slate-200 space-y-4">
                   <div className="flex items-center justify-between">
                     <span className="font-bold text-slate-900 text-xs">Portada 1 (Diapositiva Inicial)</span>
                     <span className="text-[10px] px-2 py-0.5 rounded bg-brand-100 text-brand-800 font-bold">Activa</span>
                   </div>
 
-                  {/* Thumbnail preview */}
-                  <div className="w-full h-36 rounded-xl overflow-hidden bg-slate-900 border border-slate-300 relative shadow-inner">
-                    <img 
-                      src={content.hero.portada1 || '/images/portada-1.png'} 
-                      alt="Vista previa Portada 1"
-                      className="w-full h-full object-cover object-center"
-                      onError={(e) => { (e.target as HTMLImageElement).src = '/images/portada-1.png'; }}
-                    />
-                    <div className="absolute inset-0 bg-white/40 pointer-events-none" />
-                    <div className="absolute bottom-2 left-2 bg-slate-900/80 text-white text-[10px] px-2 py-0.5 rounded backdrop-blur-xs">
-                      Vista previa
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-slate-700 font-bold mb-1">Ruta / URL de Portada 1:</label>
-                    <input
-                      type="text"
-                      value={content.hero.portada1 || ''}
-                      onChange={(e) => setContent({
-                        ...content,
-                        hero: { ...content.hero, portada1: e.target.value }
-                      })}
-                      placeholder="/images/portada-1.png"
-                      className="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-slate-900 text-xs"
-                    />
-                  </div>
-
-                  {/* Preset quick buttons */}
-                  <div className="pt-1">
-                    <span className="text-[10px] text-slate-500 font-semibold block mb-1">Selección rápida:</span>
-                    <div className="flex flex-wrap gap-1.5">
-                      {PRESET_PORTADAS.map((p, i) => (
-                        <button
-                          key={i}
-                          type="button"
-                          onClick={() => setContent({ ...content, hero: { ...content.hero, portada1: p.url } })}
-                          className={`text-[10px] px-2 py-1 rounded-lg border font-semibold transition-all ${
-                            content.hero.portada1 === p.url
-                              ? 'bg-brand-600 text-white border-brand-600'
-                              : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'
-                          }`}
-                        >
-                          {p.label}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
+                  <ImageUploader
+                    label="Imagen de Portada 1"
+                    value={content.hero.portada1 || '/images/portada-1.png'}
+                    onChange={(url) => setContent({
+                      ...content,
+                      hero: { ...content.hero, portada1: url }
+                    })}
+                    presets={PRESET_PORTADAS}
+                    placeholder="/images/portada-1.png"
+                    previewHeight="h-40"
+                    helperText="Carga una foto desde tu PC o selecciona una portada existente."
+                  />
                 </div>
 
                 {/* Portada 2 */}
-                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+                <div className="p-5 rounded-3xl bg-slate-50 border border-slate-200 space-y-4">
                   <div className="flex items-center justify-between">
                     <span className="font-bold text-slate-900 text-xs">Portada 2 (Segunda Diapositiva)</span>
                     <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold">Activa</span>
                   </div>
 
-                  {/* Thumbnail preview */}
-                  <div className="w-full h-36 rounded-xl overflow-hidden bg-slate-900 border border-slate-300 relative shadow-inner">
-                    <img 
-                      src={content.hero.portada2 || '/images/portada-2.png'} 
-                      alt="Vista previa Portada 2"
-                      className="w-full h-full object-cover object-center"
-                      onError={(e) => { (e.target as HTMLImageElement).src = '/images/portada-2.png'; }}
-                    />
-                    <div className="absolute inset-0 bg-white/40 pointer-events-none" />
-                    <div className="absolute bottom-2 left-2 bg-slate-900/80 text-white text-[10px] px-2 py-0.5 rounded backdrop-blur-xs">
-                      Vista previa
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-slate-700 font-bold mb-1">Ruta / URL de Portada 2:</label>
-                    <input
-                      type="text"
-                      value={content.hero.portada2 || ''}
-                      onChange={(e) => setContent({
-                        ...content,
-                        hero: { ...content.hero, portada2: e.target.value }
-                      })}
-                      placeholder="/images/portada-2.png"
-                      className="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-slate-900 text-xs"
-                    />
-                  </div>
-
-                  {/* Preset quick buttons */}
-                  <div className="pt-1">
-                    <span className="text-[10px] text-slate-500 font-semibold block mb-1">Selección rápida:</span>
-                    <div className="flex flex-wrap gap-1.5">
-                      {PRESET_PORTADAS.map((p, i) => (
-                        <button
-                          key={i}
-                          type="button"
-                          onClick={() => setContent({ ...content, hero: { ...content.hero, portada2: p.url } })}
-                          className={`text-[10px] px-2 py-1 rounded-lg border font-semibold transition-all ${
-                            content.hero.portada2 === p.url
-                              ? 'bg-emerald-600 text-white border-emerald-600'
-                              : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'
-                          }`}
-                        >
-                          {p.label}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
+                  <ImageUploader
+                    label="Imagen de Portada 2"
+                    value={content.hero.portada2 || '/images/portada-2.png'}
+                    onChange={(url) => setContent({
+                      ...content,
+                      hero: { ...content.hero, portada2: url }
+                    })}
+                    presets={PRESET_PORTADAS}
+                    placeholder="/images/portada-2.png"
+                    previewHeight="h-40"
+                    helperText="Carga una foto desde tu PC o selecciona una portada existente."
+                  />
                 </div>
 
               </div>
@@ -463,61 +408,25 @@ export default function AdminCMSPage() {
 
                   <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
                     
-                    {/* Left Thumbnail & Image selector */}
-                    <div className="md:col-span-4 space-y-3">
-                      <label className="block text-slate-700 font-bold">Imagen del Artículo:</label>
-                      <div className="w-full h-36 rounded-2xl overflow-hidden bg-slate-900 border border-slate-300 relative shadow-inner">
-                        <img 
-                          src={art.imagen || '/images/Promocional HISTORIA 1.jpg.jpeg'} 
-                          alt={art.titulo}
-                          className="w-full h-full object-cover object-center"
-                          onError={(e) => { (e.target as HTMLImageElement).src = '/images/Promocional HISTORIA 1.jpg.jpeg'; }}
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent pointer-events-none" />
-                        <div className="absolute bottom-2 left-2 text-[10px] text-white font-bold bg-slate-900/80 px-2 py-0.5 rounded">
-                          Vista previa
-                        </div>
-                      </div>
-
-                      <input
-                        type="text"
-                        value={art.imagen || ''}
-                        onChange={(e) => {
+                    {/* Left Thumbnail & Image selector with Upload from PC */}
+                    <div className="md:col-span-5 space-y-3">
+                      <ImageUploader
+                        label="Imagen del Artículo"
+                        value={art.imagen || '/images/Promocional HISTORIA 1.jpg.jpeg'}
+                        onChange={(url) => {
                           const updated = [...content.blog];
-                          updated[idx].imagen = e.target.value;
+                          updated[idx].imagen = url;
                           setContent({ ...content, blog: updated });
                         }}
+                        presets={PRESET_BLOG_IMAGES}
                         placeholder="/images/Promocional HISTORIA 1.jpg.jpeg"
-                        className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-xs"
+                        previewHeight="h-36"
+                        helperText="Carga una foto desde tu PC o selecciona una imagen sugerida."
                       />
-
-                      <div className="pt-1">
-                        <span className="text-[10px] text-slate-500 font-semibold block mb-1">Imágenes sugeridas:</span>
-                        <div className="flex flex-wrap gap-1">
-                          {PRESET_BLOG_IMAGES.map((img, i) => (
-                            <button
-                              key={i}
-                              type="button"
-                              onClick={() => {
-                                const updated = [...content.blog];
-                                updated[idx].imagen = img.url;
-                                setContent({ ...content, blog: updated });
-                              }}
-                              className={`text-[10px] px-2 py-0.5 rounded border transition-all ${
-                                art.imagen === img.url
-                                  ? 'bg-brand-600 text-white border-brand-600 font-bold'
-                                  : 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200'
-                              }`}
-                            >
-                              {img.label}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
                     </div>
 
                     {/* Right Info Inputs */}
-                    <div className="md:col-span-8 space-y-3">
+                    <div className="md:col-span-7 space-y-3">
                       
                       <div>
                         <label className="block text-slate-700 font-bold mb-1">Título del Artículo:</label>
@@ -599,6 +508,99 @@ export default function AdminCMSPage() {
               ))}
             </div>
 
+          </div>
+        )}
+
+        {/* Tab: Galería de Procesos & Experiencias */}
+        {activeTab === 'galeria' && (
+          <div className="space-y-6 max-w-4xl text-xs">
+            <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+                <div>
+                  <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                    <LayoutGrid className="w-5 h-5 text-teal-600" />
+                    <span>Galería de Procesos & Experiencias</span>
+                  </h2>
+                  <p className="text-slate-500 text-xs mt-1">
+                    Administra las tarjetas con fotos de tus campañas y procesos visibles en la página principal. Puedes cargar fotos directamente desde tu PC.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const newCard = {
+                      id: `gal-${Date.now()}`,
+                      src: '/images/Promocional HISTORIA 1.jpg.jpeg',
+                      title: 'Nueva Campaña o Experiencia RAEE'
+                    };
+                    setContent({
+                      ...content,
+                      galeria: [...(content.galeria || []), newCard]
+                    });
+                  }}
+                  className="px-4 py-2 rounded-xl bg-teal-600 hover:bg-teal-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm transition-all shrink-0 cursor-pointer"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>Añadir Tarjeta a Galería</span>
+                </button>
+              </div>
+
+              {/* Grid of gallery cards */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+                {(content.galeria || []).map((card, idx) => (
+                  <div key={card.id || idx} className="p-5 rounded-3xl bg-slate-50 border border-slate-200 space-y-4 relative group">
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold text-slate-900 text-xs">Tarjeta #{idx + 1} de la Galería</span>
+                      {(content.galeria || []).length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            if (confirm('¿Eliminar esta tarjeta de la galería?')) {
+                              const updated = (content.galeria || []).filter((_, i) => i !== idx);
+                              setContent({ ...content, galeria: updated });
+                            }
+                          }}
+                          className="text-rose-600 hover:text-rose-700 p-1.5 rounded-lg hover:bg-rose-50 text-xs flex items-center gap-1 font-semibold transition-colors cursor-pointer"
+                          title="Eliminar tarjeta"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                          <span>Eliminar</span>
+                        </button>
+                      )}
+                    </div>
+
+                    <div>
+                      <label className="block text-slate-700 font-bold mb-1">Título de la Tarjeta:</label>
+                      <input
+                        type="text"
+                        value={card.title}
+                        onChange={(e) => {
+                          const updated = [...(content.galeria || [])];
+                          updated[idx].title = e.target.value;
+                          setContent({ ...content, galeria: updated });
+                        }}
+                        className="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-slate-900 text-xs font-bold"
+                        placeholder="Ej. Transformación Tecnológica Sostenible"
+                      />
+                    </div>
+
+                    <ImageUploader
+                      label="Foto de la Tarjeta"
+                      value={card.src}
+                      onChange={(url) => {
+                        const updated = [...(content.galeria || [])];
+                        updated[idx].src = url;
+                        setContent({ ...content, galeria: updated });
+                      }}
+                      presets={PRESET_BLOG_IMAGES}
+                      placeholder="/images/Promocional HISTORIA 1.jpg.jpeg"
+                      previewHeight="h-44"
+                      helperText="Carga una foto desde tu PC o selecciona de la biblioteca."
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         )}
 

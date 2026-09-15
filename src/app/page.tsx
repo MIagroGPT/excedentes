@@ -21,7 +21,7 @@ export default function HomePage() {
       <Hero3D content={content.hero} />
       <CicloProceso10 procesos={content.procesos} />
       <MetricasImpacto metricas={content.metricas} />
-      <TestimoniosCasos />
+      <TestimoniosCasos galeria={content.galeria} />
       <BlogSeccion articulos={content.blog} />
       <ContactoSeccion contacto={content.contacto} />
       <Footer contacto={content.contacto} />

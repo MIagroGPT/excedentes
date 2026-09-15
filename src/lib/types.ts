@@ -73,6 +73,12 @@ export interface CMSContent {
     ciudad: string;
     horario: string;
   };
+  galeria?: Array<{
+    id: string;
+    src: string;
+    title: string;
+    subtitle?: string;
+  }>;
 }
 
 export type EtapaProceso =

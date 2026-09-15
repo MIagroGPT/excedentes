@@ -1,17 +1,40 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Star, Quote, ChevronLeft, ChevronRight, ShieldCheck, Building } from 'lucide-react';
+import { CMSContent } from '@/lib/types';
 
-export default function TestimoniosCasos() {
+interface TestimoniosCasosProps {
+  galeria?: CMSContent['galeria'];
+}
+
+const DEFAULT_PROMO_IMAGES = [
+  { id: '1', src: '/images/Promocional HISTORIA 1.jpg.jpeg', title: 'Transformación Tecnológica Sostenible' },
+  { id: '2', src: '/images/Promocional HISTORIA 2.jpg.jpeg', title: 'Certificación Ambiental Corporativa' },
+  { id: '3', src: '/images/Promocional HISTORIA 3.jpg.jpeg', title: 'Cero Vertedero y Economía Circular' },
+  { id: '4', src: '/images/Testimonio.jpg.jpeg', title: 'Experiencia y Confianza Empresarial' }
+];
+
+export default function TestimoniosCasos({ galeria }: TestimoniosCasosProps = {}) {
   const [activePromoIndex, setActivePromoIndex] = useState(0);
+  const [promoList, setPromoList] = useState(galeria && galeria.length > 0 ? galeria : DEFAULT_PROMO_IMAGES);
 
-  const promoImages = [
-    { src: '/images/Promocional HISTORIA 1.jpg.jpeg', title: 'Transformación Tecnológica Sostenible' },
-    { src: '/images/Promocional HISTORIA 2.jpg.jpeg', title: 'Certificación Ambiental Corporativa' },
-    { src: '/images/Promocional HISTORIA 3.jpg.jpeg', title: 'Cero Vertedero y Economía Circular' },
-    { src: '/images/Testimonio.jpg.jpeg', title: 'Experiencia y Confianza Empresarial' }
-  ];
+  useEffect(() => {
+    if (galeria && galeria.length > 0) {
+      setPromoList(galeria);
+    } else {
+      fetch('/api/cms')
+        .then(r => r.json())
+        .then(data => {
+          if (data?.galeria && data.galeria.length > 0) {
+            setPromoList(data.galeria);
+          }
+        })
+        .catch(err => console.error('Error cargando galería en TestimoniosCasos:', err));
+    }
+  }, [galeria]);
+
+  const promoImages = promoList;
 
   const testimonios = [
     {
