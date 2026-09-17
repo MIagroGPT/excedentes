@@ -20,7 +20,8 @@ import {
   ExternalLink,
   MessageCircle,
   AlertCircle,
-  CheckCheck
+  CheckCheck,
+  Trash2
 } from 'lucide-react';
 import { SolicitudRecoleccion, EstadoSolicitud } from '@/lib/types';
 
@@ -75,6 +76,33 @@ export default function AdminSolicitudesPage() {
     } catch (e) {
       console.error(e);
       alert('Error de conexión al actualizar');
+    } finally {
+      setProcessingId(null);
+    }
+  };
+
+  // Delete Request Record permanently
+  const handleEliminarSolicitud = async (sol: SolicitudRecoleccion) => {
+    if (!confirm(`¿Estás seguro de que deseas eliminar permanentemente la solicitud ${sol.id} de "${sol.empresa}"?\n\nEsta acción borrará el registro por completo.`)) {
+      return;
+    }
+
+    setProcessingId(sol.id);
+    try {
+      const res = await fetch(`/api/solicitudes?id=${encodeURIComponent(sol.id)}`, {
+        method: 'DELETE'
+      });
+
+      if (res.ok) {
+        setSolicitudes(prev => prev.filter(s => s.id !== sol.id));
+        alert('Solicitud eliminada correctamente.');
+      } else {
+        const err = await res.json();
+        alert(err.error || 'Error al eliminar la solicitud');
+      }
+    } catch (e) {
+      console.error(e);
+      alert('Error de conexión al eliminar la solicitud');
     } finally {
       setProcessingId(null);
     }
@@ -341,8 +369,8 @@ export default function AdminSolicitudesPage() {
                         )}
                       </div>
 
-                      {/* Status Badge */}
-                      <div className="flex items-center">
+                      {/* Status Badge & Delete Action */}
+                      <div className="flex items-center gap-1.5">
                         {status === 'pendiente' && (
                           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-extrabold bg-amber-100 text-amber-800 border border-amber-300 shadow-xs">
                             <Clock className="w-3 h-3 text-amber-600 animate-pulse" />
@@ -367,6 +395,16 @@ export default function AdminSolicitudesPage() {
                             <span>Anulado</span>
                           </span>
                         )}
+
+                        <button
+                          type="button"
+                          disabled={isProcessing}
+                          onClick={() => handleEliminarSolicitud(sol)}
+                          title="Eliminar permanentemente este registro"
+                          className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 border border-transparent hover:border-rose-200 transition-all cursor-pointer group"
+                        >
+                          <Trash2 className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
+                        </button>
                       </div>
                     </div>
 
@@ -422,17 +460,27 @@ export default function AdminSolicitudesPage() {
                   {/* Bottom: Contact & 3 Action Status Buttons */}
                   <div className="pt-4 border-t border-slate-200 space-y-3">
                     
-                    {/* Quick WhatsApp Contact */}
-                    <div className="flex items-center justify-between gap-2">
+                    {/* Quick WhatsApp Contact & Eliminar Registro */}
+                    <div className="flex items-center gap-2">
                       <a
                         href={`https://wa.me/${sol.telefono.replace(/[^0-9]/g, '')}?text=Hola%20${encodeURIComponent(sol.contacto)},%20te%20contactamos%20de%20Excedentes%20de%20Raees%20Su%C3%A1rez%20respecto%20a%20tu%20solicitud%20${sol.id}.`}
                         target="_blank"
                         rel="noreferrer"
-                        className="w-full py-2 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold border border-slate-300 flex items-center justify-center gap-1.5 transition-colors"
+                        className="flex-1 py-2 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold border border-slate-300 flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
                       >
                         <MessageCircle className="w-3.5 h-3.5 text-emerald-600" />
                         <span>Contactar por WhatsApp</span>
                       </a>
+                      <button
+                        type="button"
+                        disabled={isProcessing}
+                        onClick={() => handleEliminarSolicitud(sol)}
+                        title="Eliminar permanentemente este registro"
+                        className="py-2 px-3.5 rounded-xl bg-rose-50 hover:bg-rose-600 text-rose-600 hover:text-white border border-rose-200 hover:border-rose-600 text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-2xs group shrink-0"
+                      >
+                        <Trash2 className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
+                        <span>Eliminar</span>
+                      </button>
                     </div>
 
                     {/* 3 Status Control Buttons */}

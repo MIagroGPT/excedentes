@@ -14,7 +14,8 @@ import {
   Lock,
   CheckCircle2,
   AlertCircle,
-  Sparkles
+  Sparkles,
+  Trash2
 } from 'lucide-react';
 import { LoteResiduo } from '@/lib/types';
 import { generateCertificadoPDF } from '@/lib/pdfGenerator';
@@ -198,6 +199,32 @@ export default function AdminLotesPage() {
     }
   };
 
+  const handleDeleteLote = async (lote: LoteResiduo) => {
+    if (!confirm(`¿Estás seguro de que deseas eliminar permanentemente el lote ${lote.codigoSeguimiento} de "${lote.cliente.razonSocial}"?\n\nEsta acción borrará el registro, sus pesajes y su bitácora técnica de forma definitiva.`)) {
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/lotes?id=${encodeURIComponent(lote.id)}`, {
+        method: 'DELETE'
+      });
+
+      if (res.ok) {
+        setLotes(prev => prev.filter(l => l.id !== lote.id));
+        if (selectedLote?.id === lote.id) {
+          setSelectedLote(null);
+        }
+        alert('Lote eliminado correctamente.');
+      } else {
+        const err = await res.json();
+        alert(err.error || 'Error al eliminar el lote.');
+      }
+    } catch (e) {
+      console.error(e);
+      alert('Error de conexión al eliminar el lote.');
+    }
+  };
+
   const renderEtapasProgress = (etapaActual: number, isCompletado: boolean = false) => {
     const isFinalizado = etapaActual >= 10 && isCompletado;
 
@@ -368,12 +395,22 @@ export default function AdminLotesPage() {
                     )}
                   </td>
                   <td className="p-4 text-right">
-                    <button
-                      onClick={() => handleOpenLote(lote)}
-                      className="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-brand-600 text-white font-bold text-xs transition-colors shadow-sm cursor-pointer"
-                    >
-                      Ver & Gestionar
-                    </button>
+                    <div className="flex items-center justify-end gap-1.5">
+                      <button
+                        onClick={() => handleOpenLote(lote)}
+                        className="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-brand-600 text-white font-bold text-xs transition-colors shadow-sm cursor-pointer whitespace-nowrap"
+                      >
+                        Ver & Gestionar
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteLote(lote)}
+                        title="Eliminar este lote de registro"
+                        className="p-1.5 rounded-lg bg-rose-50 hover:bg-rose-600 text-rose-600 hover:text-white border border-rose-200 hover:border-rose-600 transition-all cursor-pointer shadow-2xs group"
+                      >
+                        <Trash2 className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -558,13 +595,24 @@ export default function AdminLotesPage() {
 
               {/* Action Buttons */}
               <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-200">
-                <button
-                  type="button"
-                  onClick={() => handleUpdateLote(false)}
-                  className="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs cursor-pointer transition-colors"
-                >
-                  Guardar Cambios de Etapa & Pesos
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => handleUpdateLote(false)}
+                    className="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs cursor-pointer transition-colors"
+                  >
+                    Guardar Cambios de Etapa & Pesos
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteLote(selectedLote)}
+                    className="px-4 py-2.5 rounded-xl bg-rose-50 hover:bg-rose-600 text-rose-600 hover:text-white border border-rose-200 hover:border-rose-600 font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer group"
+                    title="Eliminar permanentemente este lote"
+                  >
+                    <Trash2 className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
+                    <span>Eliminar Lote</span>
+                  </button>
+                </div>
 
                 <div className="flex items-center gap-2">
                   {selectedLote.certificado ? (

@@ -146,3 +146,32 @@ export async function PUT(req: Request) {
     return NextResponse.json({ error: 'Error al actualizar lote' }, { status: 400 });
   }
 }
+
+export async function DELETE(req: Request) {
+  try {
+    const { searchParams } = new URL(req.url);
+    let id = searchParams.get('id');
+
+    if (!id) {
+      const body = await req.json().catch(() => ({}));
+      id = body.id;
+    }
+
+    if (!id) {
+      return NextResponse.json({ error: 'ID o código de lote requerido' }, { status: 400 });
+    }
+
+    const lotes = getLotes();
+    const filtered = lotes.filter(l => l.id !== id && l.codigoSeguimiento !== id);
+
+    if (filtered.length === lotes.length) {
+      return NextResponse.json({ error: 'Lote no encontrado' }, { status: 404 });
+    }
+
+    saveLotes(filtered);
+    return NextResponse.json({ success: true, message: 'Lote eliminado correctamente' });
+  } catch (error) {
+    return NextResponse.json({ error: 'Error al eliminar lote' }, { status: 500 });
+  }
+}
+

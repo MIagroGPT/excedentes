@@ -80,3 +80,32 @@ export async function PUT(req: Request) {
     return NextResponse.json({ error: 'Error al actualizar solicitud' }, { status: 500 });
   }
 }
+
+export async function DELETE(req: Request) {
+  try {
+    const { searchParams } = new URL(req.url);
+    let id = searchParams.get('id');
+
+    if (!id) {
+      const body = await req.json().catch(() => ({}));
+      id = body.id;
+    }
+
+    if (!id) {
+      return NextResponse.json({ error: 'ID de solicitud requerido' }, { status: 400 });
+    }
+
+    const solicitudes = getSolicitudes();
+    const filtered = solicitudes.filter(s => s.id !== id);
+
+    if (filtered.length === solicitudes.length) {
+      return NextResponse.json({ error: 'Solicitud no encontrada' }, { status: 404 });
+    }
+
+    saveSolicitudes(filtered);
+    return NextResponse.json({ success: true, message: 'Solicitud eliminada correctamente' });
+  } catch (error) {
+    return NextResponse.json({ error: 'Error al eliminar solicitud' }, { status: 500 });
+  }
+}
+
