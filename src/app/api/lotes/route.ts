@@ -98,8 +98,12 @@ export async function PUT(req: Request) {
       current.fechaRecoleccion = data.fechaRecoleccion;
     }
 
-    // If generating certificate (Etapa 8)
+    // If generating certificate (Solo al concluir las 10 etapas)
     if (data.emitirCertificado) {
+      const targetEtapa = data.etapaActual !== undefined ? data.etapaActual : current.etapaActual;
+      if (targetEtapa < 10) {
+        return NextResponse.json({ error: 'Solo se puede emitir el Certificado Oficial si las 10 etapas fueron concluidas.' }, { status: 400 });
+      }
       const totalWeight = current.detallesCarga.pesoRealKg || current.detallesCarga.pesoEstimadoKg;
       current.certificado = {
         numeroCertificado: `CERT-RAEE-${new Date().getFullYear()}-${String(index + 40).padStart(4, '0')}`,
@@ -109,9 +113,17 @@ export async function PUT(req: Request) {
         disposicionFinal: 'Aprovechamiento y recuperación de metales y plásticos técnicos bajo norma MinAmbiente',
         impactoCO2EvitadoKg: Math.round(totalWeight * 2.1)
       };
-      current.etapaActual = 8;
+      current.etapaActual = 10;
       current.estado = 'Completado';
       current.fechaFinalizacion = new Date().toISOString().split('T')[0];
+
+      // Registrar emisión en bitácora si no existe
+      current.bitacora.push({
+        etapa: 10,
+        fecha: new Date().toLocaleString('es-CO'),
+        nota: data.notaBitacora || 'Certificado Ambiental Oficial con QR emitido tras concluir exitosamente el ciclo de 10 etapas.',
+        usuario: data.usuario || 'Director Técnico RAEE'
+      });
     }
 
     lotes[index] = current;
