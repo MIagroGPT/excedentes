@@ -260,23 +260,33 @@ export const INITIAL_CMS_CONTENT: CMSContent = {
   galeria: [
     {
       id: "gal-1",
-      src: "/images/Promocional HISTORIA 1.jpg.jpeg",
-      title: "Transformación Tecnológica Sostenible"
+      src: "/images/galeria/galeria-7.jpg",
+      title: "Personal Calificado & Operación en Planta"
     },
     {
       id: "gal-2",
-      src: "/images/Promocional HISTORIA 2.jpg.jpeg",
-      title: "Certificación Ambiental Corporativa"
+      src: "/images/galeria/galeria-2.jpg",
+      title: "Trituración & Desensamble Técnico"
     },
     {
       id: "gal-3",
-      src: "/images/Promocional HISTORIA 3.jpg.jpeg",
-      title: "Cero Vertedero y Economía Circular"
+      src: "/images/galeria/galeria-3.jpg",
+      title: "Valorización de Metales & Bobinas"
     },
     {
       id: "gal-4",
-      src: "/images/Testimonio.jpg.jpeg",
-      title: "Experiencia y Confianza Empresarial"
+      src: "/images/galeria/galeria-10.jpg",
+      title: "Gestión Integral de Transformadores & Motores"
+    },
+    {
+      id: "gal-5",
+      src: "/images/galeria/galeria-8.jpg",
+      title: "Infraestructura Autorizada en Antioquia"
+    },
+    {
+      id: "gal-6",
+      src: "/images/galeria/galeria-9.jpg",
+      title: "Custodia y Almacenamiento Seguro"
     }
   ]
 };

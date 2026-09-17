@@ -37,6 +37,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/data ./data
 
 # Set correct permissions and ensure uploads folders exist
 RUN mkdir -p /app/.next /app/data/uploads /app/public/uploads && \
+    chmod -R 777 /app/data /app/public && \
     chown -R nextjs:nodejs /app/.next /app/data /app/public
 
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./

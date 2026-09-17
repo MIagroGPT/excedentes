@@ -40,6 +40,24 @@ const PRESET_BLOG_IMAGES = [
   { label: 'Portada 2', url: '/images/portada-2.png' },
 ];
 
+const PRESET_GALERIA_IMAGES = [
+  { label: 'Foto 1 (Planta)', url: '/images/galeria/galeria-1.jpg' },
+  { label: 'Foto 2 (Triturado)', url: '/images/galeria/galeria-2.jpg' },
+  { label: 'Foto 3 (Cables y Bobinas)', url: '/images/galeria/galeria-3.jpg' },
+  { label: 'Foto 4 (Despiece)', url: '/images/galeria/galeria-4.jpg' },
+  { label: 'Foto 5 (Motores)', url: '/images/galeria/galeria-5.jpg' },
+  { label: 'Foto 6 (Clasificación)', url: '/images/galeria/galeria-6.jpg' },
+  { label: 'Foto 7 (Equipo Técnico)', url: '/images/galeria/galeria-7.jpg' },
+  { label: 'Foto 8 (Maquinaria)', url: '/images/galeria/galeria-8.jpg' },
+  { label: 'Foto 9 (Almacén y Bodega)', url: '/images/galeria/galeria-9.jpg' },
+  { label: 'Foto 10 (Transformadores)', url: '/images/galeria/galeria-10.jpg' },
+  { label: 'Foto 11 (Planta)', url: '/images/galeria/galeria-11.jpg' },
+  { label: 'Foto 12 (Proceso)', url: '/images/galeria/galeria-12.jpg' },
+  { label: 'Foto 13 (Carga)', url: '/images/galeria/galeria-13.jpg' },
+  { label: 'Foto 14 (Operación)', url: '/images/galeria/galeria-14.jpg' },
+  { label: 'Foto 15 (Material)', url: '/images/galeria/galeria-15.jpg' },
+];
+
 export default function AdminCMSPage() {
   const [content, setContent] = useState<CMSContent | null>(null);
   const [loading, setLoading] = useState(true);
@@ -655,10 +673,10 @@ export default function AdminCMSPage() {
                         updated[idx].src = url;
                         setContent({ ...content, galeria: updated });
                       }}
-                      presets={PRESET_BLOG_IMAGES}
-                      placeholder="/images/Promocional HISTORIA 1.jpg.jpeg"
+                      presets={PRESET_GALERIA_IMAGES}
+                      placeholder="/images/galeria/galeria-1.jpg"
                       previewHeight="h-44"
-                      helperText="Carga una foto desde tu PC o selecciona de la biblioteca."
+                      helperText="Carga una foto desde tu PC o selecciona de las 15 fotos oficiales de planta."
                     />
                   </div>
                 ))}

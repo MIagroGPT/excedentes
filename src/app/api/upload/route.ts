@@ -34,20 +34,37 @@ export async function POST(req: NextRequest) {
     const dataUploadsDir = path.join(process.cwd(), 'data', 'uploads');
     const publicUploadsDir = path.join(process.cwd(), 'public', 'uploads');
 
-    // Guardar primariamente en data/uploads (directorio de persistencia principal)
-    fs.writeFileSync(path.join(dataUploadsDir, filename), buffer);
+    let savedToDisk = false;
+    let fileUrl = `/api/uploads/${filename}`;
 
-    // Intentar también en public/uploads como fallback para acceso estático directo
+    // 1. Guardar en data/uploads (directorio de persistencia principal)
+    try {
+      if (!fs.existsSync(dataUploadsDir)) {
+        fs.mkdirSync(dataUploadsDir, { recursive: true });
+      }
+      fs.writeFileSync(path.join(dataUploadsDir, filename), buffer);
+      savedToDisk = true;
+    } catch (dataErr) {
+      console.warn('Aviso: No se pudo guardar en data/uploads:', dataErr);
+    }
+
+    // 2. Intentar también en public/uploads como fallback para acceso estático
     try {
       if (!fs.existsSync(publicUploadsDir)) {
         fs.mkdirSync(publicUploadsDir, { recursive: true });
       }
       fs.writeFileSync(path.join(publicUploadsDir, filename), buffer);
+      savedToDisk = true;
     } catch (pubErr) {
-      console.warn('Aviso: No se pudo escribir en public/uploads, se usará data/uploads:', pubErr);
+      console.warn('Aviso: No se pudo escribir en public/uploads:', pubErr);
     }
 
-    const fileUrl = `/api/uploads/${filename}`;
+    // 3. Fallback infalible: Si el contenedor Docker tiene permisos restringidos en disco,
+    // convertir a Data URI Base64 para que la subida NUNCA falle ni de error 500
+    if (!savedToDisk) {
+      const mimeType = file.type || 'image/jpeg';
+      fileUrl = `data:${mimeType};base64,${buffer.toString('base64')}`;
+    }
 
     return NextResponse.json({
       success: true,
@@ -57,6 +74,8 @@ export async function POST(req: NextRequest) {
     });
   } catch (error: any) {
     console.error('Error al subir archivo:', error);
-    return NextResponse.json({ error: 'Error interno al procesar la subida del archivo' }, { status: 500 });
+    return NextResponse.json({ 
+      error: `Error al procesar la imagen: ${error?.message || 'Error interno'}` 
+    }, { status: 500 });
   }
 }
