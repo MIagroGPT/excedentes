@@ -31,14 +31,13 @@ ENV HOSTNAME "0.0.0.0"
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-COPY --from=builder /app/public ./public
+# Copy public assets and seed data with proper permissions
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/data ./data
 
-# Set the correct permission for prerender cache & data folder
-RUN mkdir .next
-RUN chown nextjs:nodejs .next
-
-# Persistent data directory for CMS, Lotes & Solicitudes
-RUN mkdir -p /app/data && chown -R nextjs:nodejs /app/data
+# Set correct permissions and ensure uploads folders exist
+RUN mkdir -p /app/.next /app/data/uploads /app/public/uploads && \
+    chown -R nextjs:nodejs /app/.next /app/data /app/public
 
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static

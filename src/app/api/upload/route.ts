@@ -34,16 +34,18 @@ export async function POST(req: NextRequest) {
     const dataUploadsDir = path.join(process.cwd(), 'data', 'uploads');
     const publicUploadsDir = path.join(process.cwd(), 'public', 'uploads');
 
-    if (!fs.existsSync(dataUploadsDir)) {
-      fs.mkdirSync(dataUploadsDir, { recursive: true });
-    }
-    if (!fs.existsSync(publicUploadsDir)) {
-      fs.mkdirSync(publicUploadsDir, { recursive: true });
-    }
-
-    // Guardar en ambas ubicaciones para compatibilidad máxima (Docker volumen /app/data y static public)
+    // Guardar primariamente en data/uploads (directorio de persistencia principal)
     fs.writeFileSync(path.join(dataUploadsDir, filename), buffer);
-    fs.writeFileSync(path.join(publicUploadsDir, filename), buffer);
+
+    // Intentar también en public/uploads como fallback para acceso estático directo
+    try {
+      if (!fs.existsSync(publicUploadsDir)) {
+        fs.mkdirSync(publicUploadsDir, { recursive: true });
+      }
+      fs.writeFileSync(path.join(publicUploadsDir, filename), buffer);
+    } catch (pubErr) {
+      console.warn('Aviso: No se pudo escribir en public/uploads, se usará data/uploads:', pubErr);
+    }
 
     const fileUrl = `/api/uploads/${filename}`;
 

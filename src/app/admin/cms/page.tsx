@@ -17,7 +17,9 @@ import {
   Calendar,
   Clock,
   Tag,
-  LayoutGrid
+  LayoutGrid,
+  Download,
+  Upload
 } from 'lucide-react';
 import { CMSContent } from '@/lib/types';
 
@@ -125,6 +127,40 @@ export default function AdminCMSPage() {
     }
   };
 
+  const handleExportBackup = () => {
+    if (!content) return;
+    const blob = new Blob([JSON.stringify(content, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `respaldo_cms_excedentes_${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  const handleImportBackup = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const imported = JSON.parse(event.target?.result as string);
+        if (imported.hero && imported.contacto) {
+          setContent(imported);
+          alert('Copia de seguridad cargada con éxito. Haz clic en "Guardar y Publicar" para aplicar los cambios en el servidor.');
+        } else {
+          alert('El archivo no tiene el formato correcto del CMS.');
+        }
+      } catch (err) {
+        alert('Error al procesar el archivo JSON de respaldo.');
+      }
+    };
+    reader.readAsText(file);
+    if (e.target) e.target.value = '';
+  };
+
   if (loading || !content) {
     return (
       <div className="flex min-h-screen bg-slate-50 text-slate-900">
@@ -154,17 +190,44 @@ export default function AdminCMSPage() {
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2.5">
+            {/* Backup Export/Import */}
+            <button
+              type="button"
+              onClick={handleExportBackup}
+              title="Descargar copia de seguridad de todo el contenido actual"
+              className="px-3 py-2 rounded-xl bg-white hover:bg-slate-100 text-slate-700 font-bold text-xs flex items-center gap-1.5 border border-slate-200 shadow-xs cursor-pointer transition-all"
+            >
+              <Download className="w-3.5 h-3.5 text-slate-500" />
+              <span className="hidden sm:inline">Exportar Respaldo</span>
+            </button>
+
+            <label
+              htmlFor="import-cms-file"
+              title="Restaurar copia de seguridad desde un archivo JSON"
+              className="px-3 py-2 rounded-xl bg-white hover:bg-slate-100 text-slate-700 font-bold text-xs flex items-center gap-1.5 border border-slate-200 shadow-xs cursor-pointer transition-all"
+            >
+              <Upload className="w-3.5 h-3.5 text-slate-500" />
+              <span className="hidden sm:inline">Restaurar Respaldo</span>
+              <input
+                id="import-cms-file"
+                type="file"
+                accept=".json"
+                onChange={handleImportBackup}
+                className="hidden"
+              />
+            </label>
+
             {saveSuccess && (
               <span className="flex items-center gap-1.5 text-xs text-emerald-700 font-bold bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200 animate-in fade-in">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                <span>¡Cambios Guardados y Publicados!</span>
+                <span>¡Guardado!</span>
               </span>
             )}
             <button
               onClick={() => handleSave()}
               disabled={saving}
-              className="px-6 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-500 disabled:opacity-50 text-white font-bold text-xs flex items-center gap-2 shadow-md cursor-pointer transition-all hover:scale-105 active:scale-95"
+              className="px-5 py-2 rounded-xl bg-brand-600 hover:bg-brand-500 disabled:opacity-50 text-white font-bold text-xs flex items-center gap-2 shadow-md cursor-pointer transition-all hover:scale-105 active:scale-95"
             >
               <Save className="w-4 h-4" />
               <span>{saving ? 'Guardando...' : 'Guardar y Publicar'}</span>
@@ -807,6 +870,32 @@ export default function AdminCMSPage() {
             </div>
           </div>
         )}
+
+        {/* Floating sticky bar for save and publish */}
+        <div className="sticky bottom-4 left-0 right-0 max-w-4xl mx-auto mt-10 p-4 bg-slate-900/95 backdrop-blur-md rounded-2xl border border-slate-800 shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-4 z-40">
+          <div className="flex items-center gap-3 text-left">
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+            <span className="text-xs text-slate-300 font-medium">
+              Recuerda: Los cambios en textos o fotos deben guardarse para verse en la web pública.
+            </span>
+          </div>
+          <div className="flex items-center gap-3 shrink-0">
+            {saveSuccess && (
+              <span className="flex items-center gap-1.5 text-xs text-emerald-400 font-bold px-2 py-1">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                <span>¡Publicado con éxito!</span>
+              </span>
+            )}
+            <button
+              onClick={() => handleSave()}
+              disabled={saving}
+              className="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 text-white font-bold text-xs flex items-center gap-2 shadow-lg cursor-pointer transition-all hover:scale-105 active:scale-95"
+            >
+              <Save className="w-4 h-4" />
+              <span>{saving ? 'Guardando en Servidor...' : 'Guardar y Publicar Ahora'}</span>
+            </button>
+          </div>
+        </div>
 
       </main>
     </div>
