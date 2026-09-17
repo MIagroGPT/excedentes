@@ -8,7 +8,7 @@
     "portada1": "/images/portada-1.png",
     "portada2": "/images/portada-2.png",
     "stat1": {
-      "number": "+20",
+      "number": "+78",
       "label": "Toneladas Recicladas"
     },
     "stat2": {
@@ -16,7 +16,7 @@
       "label": "Reducción de Impacto"
     },
     "stat3": {
-      "number": "+10",
+      "number": "+8",
       "label": "Ciudades en Colombia"
     },
     "cards": [
@@ -124,7 +124,7 @@
     }
   ],
   "metricas": {
-    "toneladas": 28,
+    "toneladas": 78,
     "reduccionImpacto": 85,
     "ciudades": 8,
     "empresasAtendidas": 200

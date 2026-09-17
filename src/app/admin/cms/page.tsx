@@ -756,47 +756,182 @@ export default function AdminCMSPage() {
         {/* Tab: Métricas */}
         {activeTab === 'metricas' && (
           <div className="space-y-6 max-w-4xl bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm text-xs">
-            <h2 className="text-base font-bold text-slate-900 mb-4">Estadísticas y Contadores de Impacto Ambiental</h2>
+            <div>
+              <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                <Sparkles className="w-5 h-5 text-emerald-600" />
+                <span>Estadísticas y Contadores de Impacto Ambiental</span>
+              </h2>
+              <p className="text-slate-500 text-xs mt-1">
+                Configura las cifras reales que demuestran el impacto ecológico de la empresa ante clientes y aliados.
+              </p>
+            </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            {/* Sync Notification Banner */}
+            <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-slate-800 text-xs flex items-start gap-3">
+              <Sparkles className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
               <div>
-                <label className="block text-slate-700 font-bold mb-1">Toneladas Recicladas:</label>
-                <input
-                  type="number"
-                  value={content.metricas.toneladas}
-                  onChange={(e) => setContent({ ...content, metricas: { ...content.metricas, toneladas: Number(e.target.value) } })}
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900"
-                />
+                <p className="font-bold text-slate-900 text-xs">Sincronización Total de Ambos Bloques (Hero y Sección Métricas)</p>
+                <p className="text-slate-600 mt-1 leading-relaxed text-[11px]">
+                  Cualquier número que cambies aquí se actualiza <strong>automáticamente en los dos lugares de la web</strong>: en las <strong>3 tarjetas del Encabezado (Hero - Inicio)</strong> y en las <strong>4 tarjetas de la sección "Resultados Tangibles en Sostenibilidad"</strong>.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
+              {/* Métrica 1: Toneladas */}
+              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-brand-700 text-xs uppercase tracking-wide">Métrica 1 (Toneladas)</span>
+                  <span className="text-[10px] bg-brand-100 text-brand-800 font-bold px-2 py-0.5 rounded">Hero & Sección</span>
+                </div>
+                <div>
+                  <label className="block text-slate-700 font-bold mb-1">Toneladas Recicladas (Número):</label>
+                  <input
+                    type="number"
+                    value={content.metricas.toneladas}
+                    onChange={(e) => {
+                      const val = Number(e.target.value);
+                      setContent({
+                        ...content,
+                        metricas: { ...content.metricas, toneladas: val },
+                        hero: {
+                          ...content.hero,
+                          stat1: { ...(content.hero?.stat1 || { label: 'Toneladas Recicladas' }), number: `+${val}` }
+                        }
+                      });
+                    }}
+                    className="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 font-bold text-sm"
+                    placeholder="Ej. 78"
+                  />
+                </div>
+                <div>
+                  <label className="block text-slate-600 font-semibold mb-1 text-[11px]">Etiqueta / Texto del bloque:</label>
+                  <input
+                    type="text"
+                    value={content.hero?.stat1?.label || 'Toneladas Recicladas'}
+                    onChange={(e) => {
+                      setContent({
+                        ...content,
+                        hero: {
+                          ...content.hero,
+                          stat1: { ...(content.hero?.stat1 || { number: `+${content.metricas.toneladas}` }), label: e.target.value }
+                        }
+                      });
+                    }}
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-slate-700 text-xs"
+                  />
+                </div>
               </div>
 
-              <div>
-                <label className="block text-slate-700 font-bold mb-1">% Reducción Impacto:</label>
-                <input
-                  type="number"
-                  value={content.metricas.reduccionImpacto}
-                  onChange={(e) => setContent({ ...content, metricas: { ...content.metricas, reduccionImpacto: Number(e.target.value) } })}
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900"
-                />
+              {/* Métrica 2: Reducción Impacto */}
+              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-emerald-700 text-xs uppercase tracking-wide">Métrica 2 (% Reducción)</span>
+                  <span className="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded">Hero & Sección</span>
+                </div>
+                <div>
+                  <label className="block text-slate-700 font-bold mb-1">% Reducción de Impacto (Número):</label>
+                  <input
+                    type="number"
+                    value={content.metricas.reduccionImpacto}
+                    onChange={(e) => {
+                      const val = Number(e.target.value);
+                      setContent({
+                        ...content,
+                        metricas: { ...content.metricas, reduccionImpacto: val },
+                        hero: {
+                          ...content.hero,
+                          stat2: { ...(content.hero?.stat2 || { label: 'Reducción de Impacto' }), number: `${val}%` }
+                        }
+                      });
+                    }}
+                    className="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 font-bold text-sm"
+                    placeholder="Ej. 85"
+                  />
+                </div>
+                <div>
+                  <label className="block text-slate-600 font-semibold mb-1 text-[11px]">Etiqueta / Texto del bloque:</label>
+                  <input
+                    type="text"
+                    value={content.hero?.stat2?.label || 'Reducción de Impacto'}
+                    onChange={(e) => {
+                      setContent({
+                        ...content,
+                        hero: {
+                          ...content.hero,
+                          stat2: { ...(content.hero?.stat2 || { number: `${content.metricas.reduccionImpacto}%` }), label: e.target.value }
+                        }
+                      });
+                    }}
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-slate-700 text-xs"
+                  />
+                </div>
               </div>
 
-              <div>
-                <label className="block text-slate-700 font-bold mb-1">Ciudades con Cobertura:</label>
-                <input
-                  type="number"
-                  value={content.metricas.ciudades}
-                  onChange={(e) => setContent({ ...content, metricas: { ...content.metricas, ciudades: Number(e.target.value) } })}
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900"
-                />
+              {/* Métrica 3: Ciudades */}
+              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-teal-700 text-xs uppercase tracking-wide">Métrica 3 (Ciudades)</span>
+                  <span className="text-[10px] bg-teal-100 text-teal-800 font-bold px-2 py-0.5 rounded">Hero & Sección</span>
+                </div>
+                <div>
+                  <label className="block text-slate-700 font-bold mb-1">Ciudades con Cobertura (Número):</label>
+                  <input
+                    type="number"
+                    value={content.metricas.ciudades}
+                    onChange={(e) => {
+                      const val = Number(e.target.value);
+                      setContent({
+                        ...content,
+                        metricas: { ...content.metricas, ciudades: val },
+                        hero: {
+                          ...content.hero,
+                          stat3: { ...(content.hero?.stat3 || { label: 'Ciudades en Colombia' }), number: `+${val}` }
+                        }
+                      });
+                    }}
+                    className="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 font-bold text-sm"
+                    placeholder="Ej. 8"
+                  />
+                </div>
+                <div>
+                  <label className="block text-slate-600 font-semibold mb-1 text-[11px]">Etiqueta / Texto del bloque:</label>
+                  <input
+                    type="text"
+                    value={content.hero?.stat3?.label || 'Ciudades en Colombia'}
+                    onChange={(e) => {
+                      setContent({
+                        ...content,
+                        hero: {
+                          ...content.hero,
+                          stat3: { ...(content.hero?.stat3 || { number: `+${content.metricas.ciudades}` }), label: e.target.value }
+                        }
+                      });
+                    }}
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-slate-700 text-xs"
+                  />
+                </div>
               </div>
 
-              <div>
-                <label className="block text-slate-700 font-bold mb-1">Empresas Atendidas:</label>
-                <input
-                  type="number"
-                  value={content.metricas.empresasAtendidas}
-                  onChange={(e) => setContent({ ...content, metricas: { ...content.metricas, empresasAtendidas: Number(e.target.value) } })}
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900"
-                />
+              {/* Métrica 4: Empresas */}
+              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-indigo-700 text-xs uppercase tracking-wide">Métrica 4 (Empresas)</span>
+                  <span className="text-[10px] bg-indigo-100 text-indigo-800 font-bold px-2 py-0.5 rounded">Sección Principal</span>
+                </div>
+                <div>
+                  <label className="block text-slate-700 font-bold mb-1">Empresas Certificadas / Atendidas:</label>
+                  <input
+                    type="number"
+                    value={content.metricas.empresasAtendidas}
+                    onChange={(e) => setContent({ ...content, metricas: { ...content.metricas, empresasAtendidas: Number(e.target.value) } })}
+                    className="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 font-bold text-sm"
+                    placeholder="Ej. 200"
+                  />
+                </div>
+                <p className="text-[11px] text-slate-500 italic pt-2">
+                  Se muestra en la cuarta tarjeta de &ldquo;Resultados Tangibles en Sostenibilidad&rdquo;.
+                </p>
               </div>
             </div>
           </div>

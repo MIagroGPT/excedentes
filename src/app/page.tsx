@@ -18,7 +18,7 @@ export default function HomePage() {
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900 selection:bg-brand-500 selection:text-white">
       <Navbar />
-      <Hero3D content={content.hero} />
+      <Hero3D content={content.hero} metricas={content.metricas} />
       <CicloProceso10 procesos={content.procesos} />
       <MetricasImpacto metricas={content.metricas} />
       <TestimoniosCasos galeria={content.galeria} />

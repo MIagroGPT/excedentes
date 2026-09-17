@@ -15,9 +15,9 @@ export const INITIAL_CMS_CONTENT: CMSContent = {
     subtitle: "Somos Excedentes de Raees Suárez, pioneros en gestión integral, reciclaje certificado y desincorporación tecnológica en Medellín y Colombia.",
     ctaPrimary: "Solicitar Recolección",
     ctaSecondary: "Conoce Nuestro Proceso",
-    stat1: { number: "+20", label: "Toneladas Recicladas" },
+    stat1: { number: "+78", label: "Toneladas Recicladas" },
     stat2: { number: "85%", label: "Reducción de Impacto" },
-    stat3: { number: "+10", label: "Ciudades en Colombia" },
+    stat3: { number: "+8", label: "Ciudades en Colombia" },
     cards: [
       {
         id: 1,
@@ -123,10 +123,10 @@ export const INITIAL_CMS_CONTENT: CMSContent = {
     }
   ],
   metricas: {
-    toneladas: 28,
+    toneladas: 78,
     reduccionImpacto: 85,
-    ciudades: 12,
-    empresasAtendidas: 140
+    ciudades: 8,
+    empresasAtendidas: 200
   },
   procesos: [
     {

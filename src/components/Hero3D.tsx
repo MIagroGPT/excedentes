@@ -7,9 +7,10 @@ import { CMSContent } from '@/lib/types';
 
 interface HeroProps {
   content: CMSContent['hero'];
+  metricas?: CMSContent['metricas'];
 }
 
-export default function Hero3D({ content }: HeroProps) {
+export default function Hero3D({ content, metricas }: HeroProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const slides = [
@@ -104,19 +105,31 @@ export default function Hero3D({ content }: HeroProps) {
           </Link>
         </div>
 
-        {/* Quick Stats Badges */}
+        {/* Quick Stats Badges (Sincronizado automáticamente con las Métricas de Impacto) */}
         <div className="mt-10 grid grid-cols-3 gap-3 sm:gap-6 max-w-2xl mx-auto pt-6 border-t border-slate-300/80">
           <div className="bg-white/95 p-3 sm:p-4 rounded-2xl border border-slate-200 shadow-md backdrop-blur-md">
-            <div className="text-xl sm:text-3xl font-black text-brand-600">{content.stat1.number}</div>
-            <div className="text-[11px] sm:text-xs text-slate-700 font-bold">{content.stat1.label}</div>
+            <div className="text-xl sm:text-3xl font-black text-brand-600">
+              {metricas?.toneladas !== undefined ? `+${metricas.toneladas}` : (content.stat1?.number || '+20')}
+            </div>
+            <div className="text-[11px] sm:text-xs text-slate-700 font-bold">
+              {content.stat1?.label || 'Toneladas Recicladas'}
+            </div>
           </div>
           <div className="bg-white/95 p-3 sm:p-4 rounded-2xl border border-slate-200 shadow-md backdrop-blur-md">
-            <div className="text-xl sm:text-3xl font-black text-emerald-600">{content.stat2.number}</div>
-            <div className="text-[11px] sm:text-xs text-slate-700 font-bold">{content.stat2.label}</div>
+            <div className="text-xl sm:text-3xl font-black text-emerald-600">
+              {metricas?.reduccionImpacto !== undefined ? `${metricas.reduccionImpacto}%` : (content.stat2?.number || '85%')}
+            </div>
+            <div className="text-[11px] sm:text-xs text-slate-700 font-bold">
+              {content.stat2?.label || 'Reducción de Impacto'}
+            </div>
           </div>
           <div className="bg-white/95 p-3 sm:p-4 rounded-2xl border border-slate-200 shadow-md backdrop-blur-md">
-            <div className="text-xl sm:text-3xl font-black text-teal-600">{content.stat3.number}</div>
-            <div className="text-[11px] sm:text-xs text-slate-700 font-bold">{content.stat3.label}</div>
+            <div className="text-xl sm:text-3xl font-black text-teal-600">
+              {metricas?.ciudades !== undefined ? `+${metricas.ciudades}` : (content.stat3?.number || '+10')}
+            </div>
+            <div className="text-[11px] sm:text-xs text-slate-700 font-bold">
+              {content.stat3?.label || 'Ciudades en Colombia'}
+            </div>
           </div>
         </div>
       </div>
